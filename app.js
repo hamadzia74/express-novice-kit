@@ -5,7 +5,9 @@ const path = require('path')
 // Third Party Packages
 const express = require('express')
 
-const adminData = require('./routes/admin') // import the admin routes
+// const adminData = require('./routes/admin') // import the admin routes
+
+const adminRoutes = require('./routes/admin') // import the admin routes
 const shopRoutes = require('./routes/shop')
 
 const bodyParser = require('body-parser') // middleware to parse incoming request bodies
@@ -29,11 +31,9 @@ const app = express() // app here actually also happens to be a valid request ha
 // app.set('view engine', 'handlebars')
 // app.set('views', 'views')
 
-
 app.set('view engine', 'ejs') // set the view engine to ejs
 app.set('views', 'views') // set the views directory where the templates are located
 // app.set('views', path.join(__dirname, 'views')) // set the views directory to the views folder in the current directory
-
 
 // app.use((req, res, next) => {
 //   console.log("Middleware 1");
@@ -54,7 +54,7 @@ app.set('views', 'views') // set the views directory where the templates are loc
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public'))) // serve static files from the public directory
 
-app.use('/admin', adminData.routes)
+app.use('/admin', adminRoutes)
 app.use(shopRoutes)
 
 app.use((req, res, next) => {
