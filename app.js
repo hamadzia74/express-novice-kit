@@ -11,6 +11,7 @@ const adminRoutes = require('./routes/admin') // import the admin routes
 const shopRoutes = require('./routes/shop')
 
 const bodyParser = require('body-parser') // middleware to parse incoming request bodies
+const { get404 } = require('./controllers/error')
 // const expressHbs = require('express-handlebars')
 
 const app = express() // app here actually also happens to be a valid request handler so you can pass it directly to createServer
@@ -57,12 +58,14 @@ app.use(express.static(path.join(__dirname, 'public'))) // serve static files fr
 app.use('/admin', adminRoutes)
 app.use(shopRoutes)
 
-app.use((req, res, next) => {
-  // this will be executed for any request that doesn't match the above routes
-  // res.status(404).send("<h1>Page Not Found</h1>");
-  // res.status(404).sendFile(path.join(__dirname, 'views', '404.html')) // send a 404 error page to the client
-  res.status(404).render('404', { pageTitle: 'Page Not Found' })
-}) // set the status code to 404 and send a response to the client
+// app.use((req, res, next) => {
+//   // this will be executed for any request that doesn't match the above routes
+//   // res.status(404).send("<h1>Page Not Found</h1>");
+//   // res.status(404).sendFile(path.join(__dirname, 'views', '404.html')) // send a 404 error page to the client
+//   res.status(404).render('404', { pageTitle: 'Page Not Found' })
+// }) // set the status code to 404 and send a response to the client
+
+app.use(get404)
 
 // app.use((req, res, next) => {
 // const server = http.createServer(app);
