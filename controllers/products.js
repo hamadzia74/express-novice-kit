@@ -1,4 +1,5 @@
-const products = []
+// const products = []
+const Product = require('../models/product') // import class by adding a new constant, the convention is to use a capital staring character for classes
 
 exports.getAddProduct = (req, res, next) => {
   console.log('Middleware 3')
@@ -18,11 +19,16 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   console.log(req.body)
-  products.push({ title: req.body.title })
+  // products.push({ title: req.body.title })
+  const product = new Product(req.body.title) // create a new object based on this class blueprint and that is what classes are in the end, they are blueprints.
+  product.save()
   res.redirect('/') // redirect to the root URL
 }
 
 exports.getProducts = (req, res, next) => {
+  // const products = products
+  const products = Product.fetchAll()
+
   res.render('shop', {
     prods: products,
     pageTitle: 'Shop',
