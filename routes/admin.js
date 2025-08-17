@@ -26,7 +26,7 @@ const router = express.Router() // Router is a class in Express that allows you 
 // })
 
 router.get('/add-product', getAddProduct)
-router.get('/product', getProducts)
+router.get('/products', getProducts)
 
 router.post('/add-product', postAddProduct)
 
