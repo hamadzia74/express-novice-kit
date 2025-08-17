@@ -1,5 +1,4 @@
-// const products = []
-const Product = require('../models/product') // import class by adding a new constant, the convention is to use a capital staring character for classes
+const Product = require('../models/product')
 
 exports.getAddProduct = (req, res, next) => {
   console.log('Middleware 3')
@@ -26,25 +25,11 @@ exports.postAddProduct = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-  // const products = products
-  // const products = Product.fetchAll()
   Product.fetchAll((products) => {
-    res.render('shop/product-list', {
+    res.render('admin/products', {
       prods: products,
-      pageTitle: 'Shop',
-      path: '/',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true,
+      pageTitle: 'Admin Products',
+      path: '/admin/products',
     })
   })
-
-  // res.render('shop', {
-  //   prods: products,
-  //   pageTitle: 'Shop',
-  //   path: '/',
-  //   hasProducts: products.length > 0,
-  //   activeShop: true,
-  //   productCSS: true,
-  // })
 }

@@ -4,7 +4,7 @@ const express = require('express')
 
 const rootDir = require('../util/path')
 const adminData = require('./admin')
-const { getProducts } = require('../controllers/products')
+const { getProducts, getIndex, getCart, getCheckout } = require('../controllers/shop')
 
 const router = express.Router()
 
@@ -26,6 +26,9 @@ const router = express.Router()
 //   })
 // })
 
-router.get('/', getProducts)
+router.get('/', getIndex)
+router.get('/products', getProducts)
+router.get('/cart', getCart)
+router.get('/checkout', getCheckout)
 
 module.exports = router
