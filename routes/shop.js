@@ -4,7 +4,7 @@ const express = require('express')
 
 const rootDir = require('../util/path')
 const adminData = require('./admin')
-const { getProducts, getIndex, getCart, getCheckout, getOrders } = require('../controllers/shop')
+const { getProducts, getIndex, getCart, getCheckout, getOrders, getProduct } = require('../controllers/shop')
 
 const router = express.Router()
 
@@ -27,7 +27,10 @@ const router = express.Router()
 // })
 
 router.get('/', getIndex)
-router.get('/products', getProducts)
+router.get('/products', getProduct)
+
+router.get('/products/:productId', getProducts)
+
 router.get('/cart', getCart)
 router.get('/orders', getOrders)
 router.get('/checkout', getCheckout)
