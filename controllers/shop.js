@@ -1,4 +1,5 @@
 // const products = []
+const Cart = require('../models/cart')
 const Product = require('../models/product') // import class by adding a new constant, the convention is to use a capital staring character for classes
 
 exports.getProducts = (req, res, next) => {
@@ -55,7 +56,9 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId
-  console.log(prodId)
+  Product.findById(prodId, product => {
+    Cart.addProduct(prodId, product.price)
+  })
   res.redirect('/cart')
 }
 
