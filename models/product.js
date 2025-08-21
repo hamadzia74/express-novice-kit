@@ -19,7 +19,8 @@ const getProductsFromFile = (cb) => {
 }
 
 module.exports = class Product {
-  constructor(title, imageUrl, description, price) {
+  constructor(id, title, imageUrl, description, price) {
+    this.id = id
     this.title = title
     this.imageUrl = imageUrl
     this.description = description
@@ -32,12 +33,24 @@ module.exports = class Product {
     //   'data',
     //   'products.json'
     // )
-    this.id = Math.random().toString()
+
     getProductsFromFile((products) => {
-      products.push(this)
-      fs.writeFile(p, JSON.stringify(products), (err) => {
-        console.log(err)
-      })
+      if (this.id) {
+        const existingProductIndex = products.findIndex(
+          (prod) => prod.id === this.id
+        )
+        const updatedProducts = [...products]
+        updatedProducts[existingProductIndex] = this
+        fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
+          console.log(err)
+        })
+      } else {
+        this.id = Math.random().toString()
+        products.push(this)
+        fs.writeFile(p, JSON.stringify(products), (err) => {
+          console.log(err)
+        })
+      }
     })
     // fs.readFile(p, (err, fileContent) => {
     //   console.log(fileContent)
@@ -73,7 +86,7 @@ module.exports = class Product {
   static findById(id, cb) {
     // callback which will be executed once we've done finding the product
     getProductsFromFile((products) => {
-      const product = products.find(p => p.id === id)
+      const product = products.find((p) => p.id === id)
       cb(product)
     })
   }
