@@ -7,12 +7,12 @@ exports.getAddProduct = (req, res, next) => {
   //   );
   //   res.sendFile(path.join(__dirname, "..", "views", "add-product.html"));
   // res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
-  res.render('admin/add-product', {
+  res.render('admin/edit-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
-    activeAddProduct: true,
-    formsCSS: true,
-    productCSS: true,
+    // activeAddProduct: true,
+    // formsCSS: true,
+    // productCSS: true,
   })
 }
 
@@ -29,6 +29,18 @@ exports.postAddProduct = (req, res, next) => {
 
   product.save()
   res.redirect('/') // redirect to the root URL
+}
+
+exports.getEditProduct = (req, res, next) => {
+  const editMode = req.query.edit
+  if (!editMode) {
+    return res.redirect('/')
+  }
+  res.render('admin/edit-product', {
+    pageTitle: 'Edit Product',
+    path: '/admin/edit-product',
+    editing: editMode,
+  })
 }
 
 exports.getProducts = (req, res, next) => {
