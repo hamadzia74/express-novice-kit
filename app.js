@@ -11,6 +11,9 @@ const adminRoutes = require('./routes/admin') // import the admin routes
 const shopRoutes = require('./routes/shop')
 
 const bodyParser = require('body-parser') // middleware to parse incoming request bodies
+
+const db = require('./util/database') // import the database connection
+
 const { get404 } = require('./controllers/error')
 // const expressHbs = require('express-handlebars')
 
@@ -51,6 +54,8 @@ app.set('views', 'views') // set the views directory where the templates are loc
 //   console.log("This always runs!");
 //   next();
 // });
+
+db.execute('SELECT * FROM products');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public'))) // serve static files from the public directory
