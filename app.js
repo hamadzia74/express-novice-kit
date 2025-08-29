@@ -55,7 +55,7 @@ app.set('views', 'views') // set the views directory where the templates are loc
 //   next();
 // });
 
-db.execute('SELECT * FROM products');
+db.execute('SELECT * FROM products').then().catch()
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public'))) // serve static files from the public directory
