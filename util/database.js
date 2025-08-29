@@ -10,7 +10,7 @@ const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   database: 'node_complete',
-  password: '1234432IrinaTech_'
+  password: 'password'
 });
 
 module.exports = pool.promise(); // this will allow us to use promises when working with these connections which of course handle asynchronous tasks, asynchronous data instead of callbacks because promises allow us to write code in a bit more structured way, we don't have many nested callbacks, instead we can use promise chains.
