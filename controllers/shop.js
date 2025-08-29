@@ -2,28 +2,40 @@
 const Cart = require('../models/cart')
 const Product = require('../models/product') // import class by adding a new constant, the convention is to use a capital staring character for classes
 
-exports.getProducts = (req, res, next) => {
-  // const products = products
-  // const products = Product.fetchAll()
-  Product.fetchAll((products) => {
-    res.render('shop/product-list', {
-      prods: products,
-      pageTitle: 'All Products',
-      path: '/products',
-      // hasProducts: products.length > 0,
-      // activeShop: true,
-      // productCSS: true,
-    })
-  })
+// exports.getProducts = (req, res, next) => {
+//   // const products = products
+//   // const products = Product.fetchAll()
+//   Product.fetchAll((products) => {
+//     res.render('shop/product-list', {
+//       prods: products,
+//       pageTitle: 'All Products',
+//       path: '/products',
+//       // hasProducts: products.length > 0,
+//       // activeShop: true,
+//       // productCSS: true,
+//     })
+//   })
 
-  // res.render('shop', {
-  //   prods: products,
-  //   pageTitle: 'Shop',
-  //   path: '/',
-  //   hasProducts: products.length > 0,
-  //   activeShop: true,
-  //   productCSS: true,
-  // })
+//   // res.render('shop', {
+//   //   prods: products,
+//   //   pageTitle: 'Shop',
+//   //   path: '/',
+//   //   hasProducts: products.length > 0,
+//   //   activeShop: true,
+//   //   productCSS: true,
+//   // })
+// }
+
+exports.getProducts = (req, res, next) => {
+  Product.fetchAll()
+    .then(([rows, fieldData]) => {
+      res.render('shop/product-list', {
+        prods: rows,
+        pageTitle: 'All Products',
+        path: '/products',
+      })
+    })
+    .catch((err) => console.log(err))
 }
 
 exports.getProduct = (req, res, next) => {
