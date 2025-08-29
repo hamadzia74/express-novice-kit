@@ -28,43 +28,51 @@ module.exports = class Product {
     this.description = description
     this.price = price
   }
-  save() {
-    // products.push(this)
-    // const p = path.join(
-    //   path.dirname(require.main.filename),
-    //   'data',
-    //   'products.json'
-    // )
+  // save() {
+  //   // products.push(this)
+  //   // const p = path.join(
+  //   //   path.dirname(require.main.filename),
+  //   //   'data',
+  //   //   'products.json'
+  //   // )
 
-    getProductsFromFile((products) => {
-      if (this.id) {
-        const existingProductIndex = products.findIndex(
-          (prod) => prod.id === this.id
-        )
-        const updatedProducts = [...products]
-        updatedProducts[existingProductIndex] = this
-        fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
-          console.log(err)
-        })
-      } else {
-        this.id = Math.random().toString()
-        products.push(this)
-        fs.writeFile(p, JSON.stringify(products), (err) => {
-          console.log(err)
-        })
-      }
-    })
-    // fs.readFile(p, (err, fileContent) => {
-    //   console.log(fileContent)
-    //   let products = []
-    //   //   if (!err) {
-    //   //     products = JSON.parse(fileContent)
-    //   //   }
-    //   products.push(this)
-    //   fs.writeFile(p, JSON.stringify(products), (err) => {
-    //     console.log(err)
-    //   })
-    // })
+  //   getProductsFromFile((products) => {
+  //     if (this.id) {
+  //       const existingProductIndex = products.findIndex(
+  //         (prod) => prod.id === this.id
+  //       )
+  //       const updatedProducts = [...products]
+  //       updatedProducts[existingProductIndex] = this
+  //       fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
+  //         console.log(err)
+  //       })
+  //     } else {
+  //       this.id = Math.random().toString()
+  //       products.push(this)
+  //       fs.writeFile(p, JSON.stringify(products), (err) => {
+  //         console.log(err)
+  //       })
+  //     }
+  //   })
+  //   // fs.readFile(p, (err, fileContent) => {
+  //   //   console.log(fileContent)
+  //   //   let products = []
+  //   //   //   if (!err) {
+  //   //   //     products = JSON.parse(fileContent)
+  //   //   //   }
+  //   //   products.push(this)
+  //   //   fs.writeFile(p, JSON.stringify(products), (err) => {
+  //   //     console.log(err)
+  //   //   })
+  //   // })
+  // }
+
+  // insert data to db
+  // Now to safely insert values and not face the issue of SQL injection which is an attack pattern where users can insert special data into your input fields in your webpage that runs as SQL queries, we should use an approach where we just use question marks, one for each of the fields we insert data into separated with commas and then there is a second argument we pass to execute with the values that will be injected instead of these question marks.
+  save() {
+    return db.execute('INSERT INTO products (title, price, imageUrl, description) VALUES (?, ?, ?, ?)',
+      [this.title, this.price, this.imageUrl, this.description]
+    )
   }
 
   static deleteById(id) {
