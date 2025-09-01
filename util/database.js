@@ -5,7 +5,7 @@
 
 // a pool of connections which will allow us to always reach out to it whenever we have a query to run and then we get a new connection from that pool which manages multiple connections so that we can run multiple queries simultaneously becuase each query needs its own connection and once the query is done, the connection will be handed back into the pool and it's available again for a new query and the pool can then be finished when our application shuts down.
 
-// Pass in a javascript object with some information about our database engine, our database host we're connecting to. 
+// Pass in a javascript object with some information about our database engine, our database host we're connecting to.
 // const pool = mysql.createPool({
 //   host: 'localhost',
 //   user: 'root',
@@ -14,17 +14,15 @@
 // });
 
 // module.exports = pool.promise();
- // this will allow us to use promises when working with these connections which of course handle asynchronous tasks, asynchronous data instead of callbacks because promises allow us to write code in a bit more structured way, we don't have many nested callbacks, instead we can use promise chains.
-
+// this will allow us to use promises when working with these connections which of course handle asynchronous tasks, asynchronous data instead of callbacks because promises allow us to write code in a bit more structured way, we don't have many nested callbacks, instead we can use promise chains.
 
 // Using Sequelize
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 
 // Create a new instance of Sequelize
-const sequelize = new Sequelize('node_complete', 'root', 'password', {
+const sequelize = new Sequelize('node_complete', 'root', '1234432IrinaTech_', {
   host: 'localhost',
-  dialect: 'mysql'
-});
+  dialect: 'mysql',
+})
 
-module.exports = sequelize;
-
+module.exports = sequelize

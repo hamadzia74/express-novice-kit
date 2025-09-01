@@ -13,6 +13,8 @@ const shopRoutes = require('./routes/shop')
 const bodyParser = require('body-parser') // middleware to parse incoming request bodies
 
 const db = require('./util/database') // import the database connection
+const sequelize = require('./util/database')
+const Product = require('./models/productSeq')
 
 const { get404 } = require('./controllers/error')
 // const expressHbs = require('express-handlebars')
@@ -78,7 +80,17 @@ app.use(shopRoutes)
 
 app.use(get404)
 
+// The sync method has a look at all the models you defined and it then basically creates the corresponding tables in the database. That is what sync does.
+sequelize
+  .sync()
+  .then((result) => {
+    app.listen(3000)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+
 // app.use((req, res, next) => {
 // const server = http.createServer(app);
 // server.listen(3000);
-app.listen(3000)
+// app.listen(3000)
