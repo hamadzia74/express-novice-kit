@@ -27,3 +27,4 @@ const sequelize = new Sequelize('node_complete', 'root', 'password', {
 });
 
 module.exports = sequelize;
+
