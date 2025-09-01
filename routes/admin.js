@@ -3,7 +3,7 @@ const path = require('path')
 const express = require('express')
 
 const rootDir = require('../util/path') // import the path to the root directory of the project
-const { getAddProduct, postAddProduct, getProducts, getEditProduct, postEditProduct, postDeleteProduct } = require('../controllers/admin')
+const { getAddProduct, postAddProduct, getProducts, getEditProduct, postEditProduct, postDeleteProduct } = require('../controllers/adminSeq')
 
 const router = express.Router() // Router is a class in Express that allows you to create modular, mountable route handlers. A Router instance is a complete middleware and routing system; for this reason, it is often referred to as a "mini-application".
 
