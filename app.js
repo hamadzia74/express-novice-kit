@@ -15,6 +15,7 @@ const bodyParser = require('body-parser') // middleware to parse incoming reques
 const db = require('./util/database') // import the database connection
 const sequelize = require('./util/database')
 const Product = require('./models/productSeq')
+const User = require('./models/user')
 
 const { get404 } = require('./controllers/error')
 // const expressHbs = require('express-handlebars')
@@ -80,9 +81,14 @@ app.use(shopRoutes)
 
 app.use(get404)
 
-// The sync method has a look at all the models you defined and it then basically creates the corresponding tables in the database. That is what sync does.
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' }) // each product belongs to a single user
+// Constraints true will add a foreign key constraint to the database and onDelete cascade will delete all products when the user is deleted
+
+User.hasMany(Product) // a user can have multiple products
+
+// The sync method has a look at all the models you defined and it then basically creates the corresponding tables in the database. That is what sync does. Not only creates the tables for the models but also the relationships between the models. So if you have a relationship between two models, it will also create the foreign key columns in the database and set up the constraints for you.
 sequelize
-  .sync()
+  .sync({ force: true }) // force true will drop the table if it already exists and create a new one. This is useful during development when you change the model definition and want to update the table structure in the database. In production, you should always set this to false to avoid losing data.
   .then((result) => {
     app.listen(3000)
   })
