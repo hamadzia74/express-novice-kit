@@ -69,6 +69,15 @@ app.set('views', 'views') // set the views directory where the templates are loc
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public'))) // serve static files from the public directory
 
+app.use((req, res, next) => {
+  User.findByPk(1) // find the user with id 1
+    .then((user) => {
+      req.user = user // attach the user to the request object
+      next() // call the next middleware function in the stack
+    })
+    .catch((err) => console.log(err))
+})
+
 app.use('/admin', adminRoutes)
 app.use(shopRoutes)
 
@@ -88,9 +97,20 @@ User.hasMany(Product) // a user can have multiple products
 
 // The sync method has a look at all the models you defined and it then basically creates the corresponding tables in the database. That is what sync does. Not only creates the tables for the models but also the relationships between the models. So if you have a relationship between two models, it will also create the foreign key columns in the database and set up the constraints for you.
 sequelize
-  .sync({ force: true }) // force true will drop the table if it already exists and create a new one. This is useful during development when you change the model definition and want to update the table structure in the database. In production, you should always set this to false to avoid losing data.
+  // .sync({ force: true }) // force true will drop the table if it already exists and create a new one. This is useful during development when you change the model definition and want to update the table structure in the database. In production, you should always set this to false to avoid losing data.
+  .sync()
   .then((result) => {
-    app.listen(3000)
+    return User.findByPk(1) // find the user with id 1
+  })
+  .then((user) => {
+    if (!user) {
+      return User.create({ name: 'Max', email: 'max@example.com' })
+    }
+    return user
+  })
+  .then((user) => {
+    // console.log(user)
+    app.listen(3000) // start the server only after the database is synced
   })
   .catch((err) => {
     console.log(err)
