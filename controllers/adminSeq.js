@@ -23,12 +23,21 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price
   const description = req.body.description
   // create method creates a new element based on that model immediately saves it to the database. There also is build which also creates a new object based on the model but only in javascript and then we need to save it manually.
-  Product.create({
-    title: title,
-    price: price,
-    imageUrl: imageUrl,
-    description: description,
-  })
+  req.user
+    .createProduct({ // Using Magic Association Method
+      title: title,
+      price: price,
+      imageUrl: imageUrl,
+      description: description,
+      // userId: req.user.id,
+    })
+    // Product.create({
+    //   title: title,
+    //   price: price,
+    //   imageUrl: imageUrl,
+    //   description: description,
+    //   // userId: req.user.id,
+    // })
     .then((result) => {
       console.log(result)
       res.redirect('/admin/products')
@@ -42,8 +51,11 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/')
   }
   const prodId = req.params.productId
-  Product.findByPk(prodId)
-    .then((product) => {
+  req.user
+    .getProducts({ where: { id: prodId } })
+    // Product.findByPk(prodId)
+    .then((products) => {
+      const product = products[0]
       if (!product) {
         return res.redirect('/')
       }
@@ -79,7 +91,8 @@ exports.postEditProduct = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  req.user.getProducts()
+  // Product.findAll()
     .then((products) => {
       res.render('admin/products', {
         prods: products,
