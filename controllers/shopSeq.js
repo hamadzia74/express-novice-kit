@@ -1,5 +1,5 @@
 // const products = []
-const Cart = require('../models/cart')
+const Cart = require('../models/cartSeq')
 const Product = require('../models/productSeq')
 
 exports.getProducts = (req, res, next) => {

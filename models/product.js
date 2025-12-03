@@ -1,7 +1,7 @@
 // const products = []
 const fs = require('fs')
 const path = require('path')
-const { deleteProduct } = require('./cart')
+const { deleteProduct } = require('./cartSeq')
 const db = require('../util/database')
 
 const p = path.join(

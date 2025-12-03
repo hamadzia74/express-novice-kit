@@ -1,5 +1,5 @@
 // const products = []
-const Cart = require('../models/cart')
+const Cart = require('../models/cartSeq')
 const Product = require('../models/product') // import class by adding a new constant, the convention is to use a capital staring character for classes
 
 // exports.getProducts = (req, res, next) => {
