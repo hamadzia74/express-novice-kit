@@ -103,8 +103,8 @@ Product.belongsToMany(Cart, { through: CartItem })
 
 // The sync method has a look at all the models you defined and it then basically creates the corresponding tables in the database. That is what sync does. Not only creates the tables for the models but also the relationships between the models. So if you have a relationship between two models, it will also create the foreign key columns in the database and set up the constraints for you.
 sequelize
-  .sync({ force: true }) // force true will drop the table if it already exists and create a new one. This is useful during development when you change the model definition and want to update the table structure in the database. In production, you should always set this to false to avoid losing data.
-  // .sync()
+  // .sync({ force: true }) // force true will drop the table if it already exists and create a new one. This is useful during development when you change the model definition and want to update the table structure in the database. In production, you should always set this to false to avoid losing data.
+  .sync()
   .then((result) => {
     return User.findByPk(1) // find the user with id 1
   })
@@ -116,6 +116,10 @@ sequelize
   })
   .then((user) => {
     // console.log(user)
+    return user.createCart() // create a cart for the user if it doesn't exist
+    // app.listen(3000) // start the server only after the database is synced
+  })
+  .then(() => {
     app.listen(3000) // start the server only after the database is synced
   })
   .catch((err) => {
